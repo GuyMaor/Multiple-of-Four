@@ -32,12 +32,13 @@ N_tes = np.size(xtes,0)
 tf.reset_default_graph()
 
 D_h = 5
-with tf.device('/cpu:0'):
+with tf.device('/gpu:0'):
 	x = tf.placeholder(tf.float32,[None,10],name="x")
 	hidden = tf.layers.dense(inputs=x, units=D_h, activation=tf.nn.sigmoid,use_bias=True,name="hidden")
 	h = tf.layers.dense(inputs=hidden, units=1, activation=tf.nn.sigmoid,use_bias=True,name="h")
 pred = 0
-with tf.Session() as session:
+config = tf.ConfigProto(allow_soft_placement = True)
+with tf.Session(config = config) as session:
 	saver = tf.train.Saver()
 	saver.restore(session, "/tmp/model.ckpt")
 

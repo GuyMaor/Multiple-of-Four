@@ -58,7 +58,8 @@ def train_NN(D_h,xtrn,ytrn,xtes,ytes):
 
 
 	num_wrong = 0
-	with tf.Session() as session:
+	config = tf.ConfigProto(allow_soft_placement = True)
+	with tf.Session(config = config) as session:
 		session.run(init)
 		NUM_ITR = 1000
 		NUM_BCH = 100
@@ -83,7 +84,7 @@ def train_NN(D_h,xtrn,ytrn,xtes,ytes):
 
 
 
-with tf.device('/cpu:0'):
+with tf.device('/gpu:0'):
 	train_NN(5,xtrn,ytrn,xtes,ytes)
 print("Done!")
 
